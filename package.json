@@ -1,7 +1,10 @@
 {
   "name": "twt",
   "version": "1.0.0",
-  "description": "True && False",
+  "description": "一个背单词肉鸽类游戏",
+  "keywords": [
+    "electron"
+  ],
   "homepage": "https://github.com/4919545484946757/TwT#readme",
   "bugs": {
     "url": "https://github.com/4919545484946757/TwT/issues"
@@ -10,15 +13,19 @@
     "type": "git",
     "url": "git+https://github.com/4919545484946757/TwT.git"
   },
-  "license": "MIT",
-  "author": "z4919",
-  "type": "commonjs",
-  "main": "index.js",
+  "license": "UNLICENSED",
+  "author": "yjx/zzh",
+  
+  "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "0",
+      "start": "electron ."
+
   },
   "devDependencies": {
     "electron": "^39.1.2"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
   }
 }

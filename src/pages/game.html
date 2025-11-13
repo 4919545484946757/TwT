@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素肉鸽游戏</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', monospace;
+        }
+        #gameContainer {
+            border: 3px solid #16213e;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+   
+    <div id="gameContainer"></div>
+
+    <!-- Phaser 3 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+    
+    <!-- 游戏类文件 - 按正确顺序引入 -->
+    <script src="../games/Bullet.js"></script>
+    <script src="../games/Weapon.js"></script>
+    <script src="../games/Player.js"></script>
+    <script src="../games/Enemy.js"></script>
+    <script src="../games/Gamesence.js"></script>
+    
+    <script>
+        const config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            parent: 'gameContainer',
+            pixelArt: true,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: false
+                }
+            },
+            scene: GameScene,
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            }
+        };
+
+        const game = new Phaser.Game(config);
+    </script>
+</body>
+</html>
