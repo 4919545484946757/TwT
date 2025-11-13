@@ -15,11 +15,11 @@ class GameWindow {
         contextIsolation: false,
         enableRemoteModule: true
       },
-      resizable: false,
-      title: 'Roguelike 2.5D Game'
+      resizable: true,
+      title: 'TWT-FORCE'
     });
 
-    this.mainWindow.loadFile('src/pages/index.html');
+    this.mainWindow.loadFile('index.html');
     
     // 开发时打开调试工具
     if (process.env.NODE_ENV === 'development') {

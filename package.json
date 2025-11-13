@@ -1,7 +1,7 @@
 {
   "name": "twt",
   "version": "1.0.0",
-  "description": "一个背单词肉鸽类游戏",
+  "description": "一个肉鸽类游戏",
   "keywords": [
     "electron"
   ],
