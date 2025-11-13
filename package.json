@@ -15,17 +15,60 @@
   },
   "license": "UNLICENSED",
   "author": "yjx/zzh",
-  
   "main": "main.js",
   "scripts": {
     "test": "0",
-      "start": "electron ."
-
+    "start": "electron .",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac", 
+    "build-linux": "electron-builder --linux",
+    "dist": "npm run build",
+    "pack": "electron-builder --dir"
   },
   "devDependencies": {
-    "electron": "^39.1.2"
+    "electron": "^39.1.2",
+    "electron-builder": "^24.13.3"
   },
   "dependencies": {
     "phaser": "^3.90.0"
+  },
+  "build": {
+    "appId": "com.twt.game",
+    "productName": "TWT",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules",
+      "!dist", 
+      "!.git"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "TWT Game",
+      "menuCategory": "TWT Apps",
+      "installerIcon": "assets/installer.ico",
+      "uninstallerIcon": "assets/uninstaller.ico",
+      "language": "2052",
+      "multiLanguageInstaller": true
+    },
+    "mac": {
+      "icon": "assets/icon.ico",
+      "target": "dmg"
+    },
+    "linux": {
+      "icon": "assets/icon.ico",
+      "target": "AppImage"
+    }
   }
 }
