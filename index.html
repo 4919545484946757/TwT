@@ -1326,7 +1326,8 @@
 
       document.getElementById('confirm-character').addEventListener('click', function () {
         if (selectedCharacter) {
-          alert(`已选择角色: ${selectedCharacter}`);
+          console.log(`已选择角色: ${selectedCharacter}`);
+          window.location.replace('game.html');
           // 在实际应用中，这里会开始游戏
         } else {
           alert('请先选择一个角色！');
