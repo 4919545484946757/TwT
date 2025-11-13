@@ -1525,15 +1525,15 @@ window.addEventListener('load', function() {
     // 调整容器高度
     function adjustContainerHeight() {
         const viewportHeight = window.innerHeight;
-        const titleHeight = document.querySelector('#start-game .title').offsetHeight;
+        const titleHeight = document.querySelector('#start-game .subsubtitle').offsetHeight;
         const selectionHeight = document.querySelector('.character-selection').offsetHeight;
-        const buttonsHeight = document.querySelector('#start-game .buttons').offsetHeight;
+        const buttonsHeight = document.querySelector('#start-game .subbuttons').offsetHeight;
         const margins = 80; // 估计的边距
         
         const availableHeight = viewportHeight - titleHeight - selectionHeight - buttonsHeight - margins;
         
         // 设置最大高度
-        detailsContainer.style.maxHeight = `${Math.max(availableHeight, 300)}px`;
+        // detailsContainer.style.maxHeight = `${Math.max(availableHeight, 300)}px`;
     }
     
     // 初始调整
