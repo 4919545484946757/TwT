@@ -16,7 +16,7 @@
       body {
         font-family: "Press Start 2P", "Courier New", monospace;
         background: linear-gradient(135deg, #1a1f35 0%, #0d1120 100%);
-        background-color: #131313;
+        background-color: #000000;
         color: #fff;
         min-height: 100vh;
         display: flex;
@@ -32,19 +32,21 @@
         left: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden;
+
         /*background-color: aqua;*/
         animation: scrollBackground 30s linear infinite;
         z-index: -1;
+        margin: 0;
       }
       /* 像素星星背景 */
       .stars2 {
+        margin: 0;
         position: absolute;
         top: -100%;
         left: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden;
+
         /*background-color: aqua;*/
         animation: scrollBackground 30s linear infinite;
         z-index: -1;
@@ -994,10 +996,12 @@
       <source src="assets/videos/smoke.mp4" type="video/mp4">
      </video>
     <!-- 像素星星背景 -->
+    <div class="stars-cotnr" id="stars-cotnr">
     <div class="stars" id="stars">
       <div class="geograph"></div>
       <div class="plus"></div>
     </div>
+  </div>
     <div id="crosshair2">
       <div class="horizontal2"></div>
       <div class="vertical2"></div>
@@ -1035,6 +1039,11 @@
         </div>
 
         <div class="footer">
+          <audio autoplay loop>
+            <source src="assets/audio/449632584-1-30280-audio.mp3" type="audio/mp3">
+            你的浏览器不支持音频播放。
+          </audio>
+        
           <p>Test Main Page v1.0 BY z4919</p>
         </div>
       </div>
@@ -1434,8 +1443,17 @@
         </div>
       </div>
     </div>
+    
 
     <script>
+
+      // 脉动效果
+
+
+
+
+
+
       const crosshair = document.getElementById("crosshair2");
       const coordinates = document.getElementById("coordinates2");
       /*const crosshair2 = document.getElementById("crosshair3");
