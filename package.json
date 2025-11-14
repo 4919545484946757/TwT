@@ -21,14 +21,14 @@
     "start": "electron .",
     "build": "electron-builder",
     "build-win": "electron-builder --win",
-    "build-mac": "electron-builder --mac", 
+    "build-mac": "electron-builder --mac",
     "build-linux": "electron-builder --linux",
     "dist": "npm run build",
     "pack": "electron-builder --dir"
   },
   "devDependencies": {
-    "electron": "^39.1.2",
-    "electron-builder": "^24.13.3"
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
   },
   "dependencies": {
     "phaser": "^3.90.0"
@@ -42,7 +42,7 @@
     "files": [
       "**/*",
       "!node_modules",
-      "!dist", 
+      "!dist",
       "!.git"
     ],
     "win": {
@@ -57,18 +57,19 @@
       "createStartMenuShortcut": true,
       "shortcutName": "TWT Game",
       "menuCategory": "TWT Apps",
-      "installerIcon": "assets/installer.ico",
-      "uninstallerIcon": "assets/uninstaller.ico",
+      "installerIcon": "assets/icon02.ico",
+      "uninstallerIcon": "assets/icon02.ico",
       "language": "2052",
       "multiLanguageInstaller": true
     },
     "mac": {
-      "icon": "assets/icon.ico",
+      "icon": "assets/icon02.ico",
       "target": "dmg"
     },
     "linux": {
-      "icon": "assets/icon.ico",
+      "icon": "assets/icon02.ico",
       "target": "AppImage"
     }
-  }
+  },
+  "type": "commonjs"
 }
