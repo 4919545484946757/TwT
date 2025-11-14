@@ -26,15 +26,15 @@ class GameWindow {
 
     // 开发环境和生产环境使用不同的加载方式
     if (process.env.NODE_ENV === 'development') {
-      this.mainWindow.loadFile('index.html');
+      this.mainWindow.loadFile('load.html');
       this.mainWindow.webContents.openDevTools();
     } else {
       // 生产环境：优先尝试加载 game.html，如果不存在则使用 index.html
       try {
-        this.mainWindow.loadFile('index.html');
+        this.mainWindow.loadFile('load.html');
       } catch (error) {
-        console.log('game.html 不存在，尝试加载 index.html');
-        this.mainWindow.loadFile('index.html');
+        console.log('game.html 不存在，尝试加载 load.html');
+        this.mainWindow.loadFile('load.html');
       }
     }
 
