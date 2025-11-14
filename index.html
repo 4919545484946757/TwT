@@ -993,6 +993,125 @@
         border-radius: 3px;
         white-space: nowrap;
       }
+      
+      .scp-docontainer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 240px;
+        height: 200px;
+      }
+      
+      
+
+      .sd-dot {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border: 1px solid white;
+      }
+
+      
+      
+      .sd-lt{
+        position: absolute;
+        left: -47px;
+        bottom: 125px;
+        width: 164px;
+        transform: translateY(-50%);
+        height: 1px;
+        background-color: white;
+        transform: rotate(-65deg);
+        opacity: 0.3;
+        animation: twinkle 4s infinite;
+      }
+      .sd-rt{
+        position: absolute;
+        left: -7px;
+        bottom: 124px;
+        width: 251px;
+        transform: translateY(-50%);
+        height: 1px;
+        background-color: white;
+        transform: rotate(-37deg);
+        z-index: 100;
+        opacity: 0.3;
+        animation: twinkle 4s infinite;
+      }
+      .sd-lb{
+        position: absolute;
+        left: -2px;
+        bottom: 15px;
+        width: 75px;
+        transform: translateY(-50%);
+        height: 1px;
+        background-color: white;
+        transform: rotate(22deg);
+        z-index: 100;
+        opacity: 0.3;
+        animation: twinkle 4s infinite;
+      }
+      .sd-rb{
+        position: absolute;
+        left: 16px;
+        bottom: 15px;
+        width: 205px;
+        transform: translateY(-50%);
+        height: 1px;
+        background-color: white;
+        transform: rotate(8.3deg);
+        z-index: 100;
+        opacity: 0.3;
+        animation: twinkle 4s infinite;
+      }
+
+      .scp-document {
+        position: absolute;
+        left: 70px;
+        top: 0px;
+        height: 200px;
+        width: 150px;
+        border: 1px solid white;
+        background-color: #00000020;
+        overflow: hidden;
+        padding: 7px;
+        opacity: 0.3;
+        animation: twinkle 4s infinite;
+      }
+      .scp-description {
+        width:80px;
+        height: 35px;
+      }
+      .scp-img {
+        margin: 7px;
+        border: 1px solid white;
+        width: 50px;
+        height:35px;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .sd-title {
+        height: 50px;
+        width: 100%;
+      }
+      .hr-line {
+        height:2px;
+        background-color: white;
+        margin: auto;
+        width: 80%;
+      }
+      .sd-content {
+        padding: 5px;
+        height:100px;
+        width: 100%;
+      }
+      
+
+
     </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
@@ -1007,9 +1126,35 @@
      </video>
     <!-- 像素星星背景 -->
     <div class="stars-cotnr" id="stars-cotnr">
-    <div class="stars" id="stars">
-      <div class="geograph"></div>
-      <div class="plus"></div>
+      <div class="stars" id="stars">
+        <div class="geograph"></div>
+        <div class="plus"></div>
+
+        <!-- div class="scp-docontainer">
+          <div class="sd-dot">
+            
+          </div>
+          <div class="sd-lt"></div>
+          <div class="sd-rt"></div>
+          <div class="sd-lb"></div>
+          <div class="sd-rb"></div>
+          
+          
+          <div class="scp-document">
+            <div class="sd-title">
+              <span class="scp-id">SCP-???</span>
+              <div class="scp-description">We know nothing about it</div>
+              <div class="scp-img"></div>
+            </div>
+            <div class="hr-line"></div>
+            <div class="sd-content">
+              
+            </div>
+          </div>
+        </div -->
+      </div>
+    </div>
+
     </div>
   </div>
     <div id="crosshair2">
@@ -1376,7 +1521,7 @@
 
             <div class="credit-category">
               <h3>资源来源</h3>
-              <div class="credit-item">字体: Press Start 2P</div>
+              <div class="credit-item">字体: fusion-pixel, Press Start 2P</div>
               <div class="credit-item">图标: 游戏开发资源库</div>
               <div class="credit-item">音效: 免费音效库</div>
             </div>
@@ -1457,7 +1602,168 @@
 
     <script>
 
-      // 脉动效果
+      document.addEventListener('DOMContentLoaded', function() {
+            const starsContainer = document.getElementById('stars');
+            const scpData = {
+    "SCP-173": {
+        "scp-id": "SCP-173",
+        "scp-description": "Class: Euclid<br>The Sculpture",
+        "scp-img": "url('https://via.placeholder.com/320x180/333333/666666?text=SCP-173')" ,
+        "sd-content": "Description: Moved to Site-19 in 1993. Origin is unknown as of yet. It is constructed from concrete and rebar, with traces of Krylon brand spray paint. SCP-173 is mobile and highly hostile. The object is incapable of moving while within a direct line of sight. Line of sight with SCP-173 must not be broken at any time. Personnel assigned to the containment chamber are to warn each other before blinking. The object's reported attack method is by snapping the neck at the base of the skull, or by strangulation. In the event of an attack incident, personnel are to observe Level 4 hazardous object containment procedures."
+    },
+    "SCP-610": {
+        "scp-id": "SCP-610",
+        "scp-description": "Class: Keter<br>The Flesh that Hates",
+        "scp-img": "url('https://via.placeholder.com/320x180/333333/666666?text=SCP-610')" ,
+        "sd-content": "Description: SCP-610 appears to be a contagious skin disease, with initial symptoms including a rash, itching, and increased skin sensitivity. After three hours, scar-like tissue marks begin to form on the chest and arms, spreading to the legs and back within an hour, and completely covering the victim within 5 hours. Exposure to high temperatures can significantly reduce the disease's spread and transmission time, whereas a full infection has been reported to occur in as little as 5 minutes."
+    },
+    "SCP-939": {
+        "scp-id": "SCP-939",
+        "scp-description": "Class: Keter<br>With Many Voices",
+        "scp-img": "url('https://via.placeholder.com/320x180/333333/666666?text=SCP-939')" ,
+        "sd-content": "Description: SCP-939 is a pack-based, warm-blooded carnivorous creature, with several of its body systems having undergone degenerative conditions similar to those of troglobitic organisms. SCP-939's skin is translucent red, highly absorbent, and its chemical composition is similar to hemoglobin. SCP-939 averages 2.2 meters tall when upright and weighs an average of 250 kg, though weight varies significantly between individuals. Each limb ends in a paw composed of three long digits and an opposable fourth digit, covered in setae that enhance climbing ability. Their heads are elongated, lacking (even vestigial) eyes and eye sockets, and also lack a skull. Red, faintly luminescent fangs, similar to the analogous organs in fish of the genus Chauliodus, line SCP-939's jaws. The fangs can be up to 6cm long and are accompanied by heat-sensing pit organs. Ocelli (eyespots) capable of sensing light and dark grow along their spined vertebral column. The spines on the vertebral column can be up to 16cm long and are believed to sense changes in air pressure and flow."
+    },
+    "SCP-096": {
+        "scp-id": "SCP-096",
+        "scp-description": "Class: Keter<br>The \"Shy Guy\"",
+        "scp-img": "url('https://via.placeholder.com/320x180/333333/666666?text=SCP-096')" ,
+        "sd-content": "Description: SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Subject shows very little muscle mass, with preliminary analysis of body mass suggesting mild malnutrition. Its arms are grossly out of proportion to the rest of its body, each measuring approximately 1.5 meters in length. Most of its skin is devoid of pigmentation, with no hair on its body."
+    }
+};
+            
+            const scpKeys = Object.keys(scpData);
+            const placedElements = [];
+            const minDistance = 300; // 最小距离要求
+            
+            // 创建4个SCP文档卡片
+            for (let i = 0; i < 4; i++) {
+                const scpKey = scpKeys[i];
+                const data = scpData[scpKey];
+                
+                // 创建SCP文档容器
+                const scpContainer = document.createElement('div');
+                scpContainer.className = 'scp-docontainer';
+                
+                // 构建内部HTML结构
+                scpContainer.innerHTML = `
+                    <div class="sd-dot"></div>
+                    <div class="sd-lt"></div>
+                    <div class="sd-rt"></div>
+                    <div class="sd-lb"></div>
+                    <div class="sd-rb"></div>
+                    
+                    <div class="scp-document">
+                        <div class="sd-title">
+                            <span class="scp-id">${data['scp-id']}</span>
+                            <div class="scp-description">${data['scp-description']}</div>
+                            <div class="scp-img" style="background-image: ${data['scp-img']};"></div>
+                        </div>
+                        <div class="hr-line"></div>
+                        <div class="sd-content">
+                            ${data['sd-content']}
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到容器
+                starsContainer.appendChild(scpContainer);
+                
+                // 设置随机位置，确保与其他元素保持最小距离
+                setRandomPosition(scpContainer, placedElements);
+                
+                // 记录已放置元素的位置和尺寸
+                const rect = scpContainer.getBoundingClientRect();
+                placedElements.push({
+                    element: scpContainer,
+                    left: parseInt(scpContainer.style.left),
+                    top: parseInt(scpContainer.style.top),
+                    width: rect.width,
+                    height: rect.height
+                });
+            }
+            
+            function setRandomPosition(element, placedElements) {
+                const containerWidth = starsContainer.clientWidth;
+                const containerHeight = starsContainer.clientHeight;
+                const elementWidth = 320; // 固定宽度
+                const elementHeight = element.offsetHeight;
+                
+                // 计算最大可放置位置
+                const maxLeft = containerWidth - elementWidth;
+                const maxTop = containerHeight - elementHeight;
+                
+                let attempts = 0;
+                let validPosition = false;
+                
+                // 尝试找到合适的位置
+                while (attempts < 10 && !validPosition) {
+                    // 生成随机位置
+                    const randomLeft = Math.floor(Math.random() * maxLeft);
+                    const randomTop = Math.floor(Math.random() * maxTop);
+                    
+                    // 检查是否与已放置元素距离足够
+                    validPosition = true;
+                    for (const placed of placedElements) {
+                        const distance = getDistance(
+                            randomLeft, randomTop, elementWidth, elementHeight,
+                            placed.left, placed.top, placed.width, placed.height
+                        );
+                        
+                        if (distance < minDistance) {
+                            validPosition = false;
+                            break;
+                        }
+                    }
+                    
+                    // 如果位置合适，设置位置
+                    if (validPosition) {
+                        element.style.left = `${randomLeft}px`;
+                        element.style.top = `${randomTop}px`;
+                    }
+                    
+                    attempts++;
+                }
+                
+                // 如果尝试100次后仍未找到合适位置，使用最后一次尝试的位置
+                if (!validPosition) {
+                    const randomLeft = Math.floor(Math.random() * maxLeft);
+                    const randomTop = Math.floor(Math.random() * maxTop);
+                    element.style.left = `${randomLeft}px`;
+                    element.style.top = `${randomTop}px`;
+                }
+            }
+            
+            function getDistance(x1, y1, w1, h1, x2, y2, w2, h2) {
+                // 计算两个矩形中心点之间的距离
+                const centerX1 = x1 + w1 / 2;
+                const centerY1 = y1 + h1 / 2;
+                const centerX2 = x2 + w2 / 2;
+                const centerY2 = y2 + h2 / 2;
+                
+                return Math.sqrt(Math.pow(centerX2 - centerX1, 2) + Math.pow(centerY2 - centerY1, 2));
+            }
+            
+            // 窗口大小改变时重新排列元素
+            window.addEventListener('resize', function() {
+                placedElements.length = 0; // 清空已放置元素数组
+                
+                // 重新设置所有元素的位置
+                const elements = document.querySelectorAll('.scp-docontainer');
+                elements.forEach(element => {
+                    setRandomPosition(element, placedElements);
+                    
+                    // 更新已放置元素数组
+                    const rect = element.getBoundingClientRect();
+                    placedElements.push({
+                        element: element,
+                        left: parseInt(element.style.left),
+                        top: parseInt(element.style.top),
+                        width: rect.width,
+                        height: rect.height
+                    });
+                });
+            });
+        });
       
 
 
@@ -1898,6 +2204,16 @@
         // 窗口大小变化时重新调整
         window.addEventListener("resize", adjustContainerHeight);
       });
+
+
+
+
+
+
+
+      
+
+    
     </script>
   </body>
 </html>

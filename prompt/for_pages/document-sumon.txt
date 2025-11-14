@@ -1,0 +1,50 @@
+在屏幕随机位置上(div内容不超出屏幕)，在<div class="stars" id="stars">中尝试嵌入生成4个<div class="scp-docontainer">及其内部内容：
+<div class="scp-docontainer">
+  <div class="sd-dot">
+  
+  </div>
+  <div class="sd-lt"></div>
+  <div class="sd-rt"></div>
+  <div class="sd-lb"></div>
+  <div class="sd-rb"></div>
+  
+  
+  <div class="scp-document">
+    <div class="sd-title">
+      <span class="scp-id">SCP-???</span>
+      <div class="scp-description">We know nothing about it</div>
+      <div class="scp-img"></div>
+    </div>
+    <div class="hr-line"></div>
+    <div class="sd-content">
+      
+    </div>
+  </div>
+</div>
+
+
+并分别填充以下内容:
+SCP-173: {
+    "scp-id": "SCP-173",
+    "scp-description": "level: Euclid \n concrete statue",
+    "scp-img": ".scp-img.style.background-image = 'url(asset/scp-docu-img/173.png)';"
+    "sd-content": "于1993年移动到Site-19。起源至今未知。它由混凝土和钢筋建造，并有Krylon牌喷漆的痕迹。SCP-173会移动且具有高度敌意。该物体在直接视线内无法移动。与SCP-173之间的视线时刻都不得中断。派往收容间的人员要在眨眼前相互提醒。据报告该物体的攻击方式为折断头骨底处的颈部，或是勒颈。在一起攻击事件中，人员应遵守4级危险物体收容措施。"
+}
+SCP-610: {
+    "scp-id": "SCP-610",
+    "scp-description": "level: Keter \n flesh of hate",
+    "scp-img": ".scp-img.style.background-image = 'url(asset/scp-docu-img/610.png)';",
+    "sd-content": "SCP-610似乎是一种传染性的皮肤病，其初期症状包括皮疹、发痒、以及皮肤过敏性增加。三小时后在胸部和手臂区域开始出现类似瘢痕组织的污点，并在一小时后扩散到腿部和背部，在5小时内彻底覆盖受害者。暴露于高温下可以大大降低该病症的蔓延和传播时间，而有报告一次完整的感染可以在5分钟内发生。"
+}
+SCP-939: {
+    "scp-id": "SCP-939",
+    "scp-description": "level: Keter \n With many voices",
+    "scp-img": ".scp-img.style.background-image = 'url(asset/scp-docu-img/939.png)';",
+    "sd-content": "描述：SCP-939是一种群居性的温血食肉动物，其多处身体系统产生了类似穴居生物的退化状况。SCP-939的皮肤呈半透明的红色，吸水性很强，化学成分近似于血红蛋白。SCP-939直立时的平均身高2.2米，平均体重250千克，但个体之间体重差异较大。它们的四肢末端各有一个由三根长指和一个方向相对的第四指组成的爪部，爪上覆盖着增进攀爬能力的刺毛。它们的头部形状修长，缺乏（哪怕是退化的）眼睛和眼眶部分，也没有头盖骨。在SCP-939的下颚上排列着发出微弱冷光的红色尖牙，与蝰鱼属的鱼类的同类器官相似，尖牙最长可长达6cm，并附有可感知温度的颊窝器。沿着带刺的脊骨生长着能感应光线明暗的眼斑。脊骨上的刺最长可达16cm，据信能感知气压和气流的变化。"
+}
+SCP-096: {
+    "scp-id": "SCP-096",
+    "scp-description": "level: Keter \n The Shy Man",
+    "scp-img": ".scp-img.style.background-image = 'url(asset/scp-docu-img/096.png)';",
+    "sd-content": "描述：SCP-096是一个约2.38米高的人型生物。对象几乎没有肌肉，初步的体重分析表明其有轻度的营养不良。其手臂与身体严重不成比例，每只长约1.5米。大部分皮肤完全不含色素，体表无毛发。"
+}
