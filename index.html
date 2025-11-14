@@ -904,6 +904,61 @@
 }
 
 
+ #crosshair2 {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: all 4s ease-in-out;
+            
+        }
+        
+        .horizontal2 {
+            position: absolute;
+            width: 10000px;
+            height: 1px;
+            background-color: rgb(255, 255, 255, 0.5);
+            top: 50%;
+            left: -50%;
+            transform: translateY(-50%);
+            transform: translateX(-50%);
+        }
+        .horizontal2:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 20px);
+            height: 60px;
+            width: 60px;
+            /*background-color: rgb(255, 255, 255);*/
+            border: #fff solid 1px;
+            transform: translateY(-50%);
+            
+        }
+        
+        .vertical2 {
+            position: absolute;
+            width: 1px;
+            height: 10000px;
+            background-color: rgba(255, 255, 255, 0.5);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        #coordinates2 {
+            position: absolute;
+            top: 45px;
+            left: 15px;
+            font-size: 12px;
+            color: #ffffff45;
+            background-color: rgba(255, 255, 255, 0.141);
+            padding: 2px 5px;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
 
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -917,7 +972,11 @@
     <div class="plus">
     </div>
   </div>
-  
+  <div id="crosshair2">
+        <div class="horizontal2"></div>
+        <div class="vertical2"></div>
+        <div id="coordinates2">(0, 0)</div>
+  </div>
 
   <!-- 像素装饰元素 -->
   <div class="pixel-art pixel-1"></div>
@@ -1306,7 +1365,74 @@
   </div>
 
   <script>
-    function load_background_height() {
+
+        const crosshair = document.getElementById('crosshair2');
+        const coordinates = document.getElementById('coordinates2');
+        
+        // 初始位置设为屏幕中心
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+        let xtemp = x;
+        let ytemp = y;
+        let realx = x;
+        let realy = y;
+        const updateInterval = 4000; // 更新间隔(毫秒)
+        const updatePosDisplayInterval = 10; // 坐标显示更新间隔(毫秒)
+        let CStime = 0;
+        
+        // 更新十字指针位置和坐标显示
+        function updatePosition() {
+
+            xtemp = x;
+            ytemp = y;
+
+            // 生成随机位置
+            x = Math.random() * window.innerWidth;
+            y = Math.random() * window.innerHeight;
+            
+            // 边界检查
+            x = Math.max(10, Math.min(window.innerWidth - 10, x));
+            y = Math.max(10, Math.min(window.innerHeight - 10, y));
+            
+            // 更新位置
+            crosshair.style.left = `${x}px`;
+            crosshair.style.top = `${y}px`;
+
+            CStime = 0;
+            
+            // 更新坐标显示
+            // coordinates.textContent = `(${Math.round(x)}, ${Math.round(y)})`;
+        }
+
+        function updatePosDisplay() {
+            // 更新坐标显示
+            
+            CStime = CStime + 10;
+            realx = (x - xtemp)/4000 * CStime + xtemp;
+            realy = (y - ytemp)/4000 * CStime + ytemp;
+            coordinates.textContent = `(${Math.round(realx)}, ${Math.round(realy)})`;
+        };
+        
+        // 初始设置
+        crosshair.style.left = `${x}px`;
+        crosshair.style.top = `${y}px`;
+        
+        // 开始运动
+        setInterval(updatePosition, updateInterval);
+        setInterval(updatePosDisplay, updatePosDisplayInterval);
+        // 页面加载后延时10ms执行一次坐标更新
+        setTimeout(updatePosition, 10);
+        
+        // 窗口大小变化时重新调整位置
+        window.addEventListener('resize', function() {
+            x = Math.min(x, window.innerWidth - 10);
+            y = Math.min(y, window.innerHeight - 10);
+        });
+
+
+
+
+function load_background_height() {
       const exam = document.getElementById('stars').offsetHeight / 2;
       const exam2 = exam / 6
       const plus_bk = document.getElementsByClassName('plus')[0];
