@@ -33,6 +33,14 @@
         position: relative;
       }
       /* 像素星星背景 */
+      .stars-cotnr {
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        bottom: 0;
+        left: 0;
+        animation: scrollBackground 30s linear infinite;
+      }
       .stars {
         position: absolute;
         top: 0;
@@ -41,7 +49,7 @@
         height: 100%;
 
         /*background-color: aqua;*/
-        animation: scrollBackground 30s linear infinite;
+        
         z-index: -1;
         margin: 0;
       }
@@ -55,7 +63,6 @@
         height: 100%;
 
         /*background-color: aqua;*/
-        animation: scrollBackground 30s linear infinite;
         z-index: -1;
       }
 
@@ -1626,7 +1633,7 @@ window.onload = function() {
 
 
 
-      document.addEventListener('DOMContentLoaded', function() {
+      function loaddocuments() {
             const starsContainer = document.getElementById('stars');
             const scpData = {
     "SCP-173": {
@@ -1787,12 +1794,76 @@ window.onload = function() {
                     });
                 });
             });
-        });
+        }
       
 
 
 
 
+
+
+      function load_background_height() {
+        const exam = document.getElementById("stars").offsetHeight / 4;
+        const exam2 = exam / 6;
+        const plus_bk = document.getElementsByClassName("plus")[0];
+        const geo_bk = document.getElementsByClassName("geograph")[0];
+        plus_bk.style.backgroundSize = `${exam2}px ${exam2}px`;
+        geo_bk.style.backgroundSize = `${exam}px ${exam}px`;
+        console.log(exam);
+        console.log(plus_bk.style.backgroundSize);
+        console.log(geo_bk.style.backgroundSize);
+      }
+
+      // 创建星星背景
+      function createStars() {
+        const starsContainer = document.getElementById("stars");
+        const starCount = 8;
+
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement("div");
+          star.classList.add("star");
+
+          // 创建 vertical 元素并添加到 star 中
+          const vertical = document.createElement("div");
+          vertical.classList.add("vertical");
+          star.appendChild(vertical);
+
+          // 随机位置
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+
+          // 随机大小
+          const size = Math.random() * 3 + 1;
+
+          // 随机动画延迟
+          const delay = Math.random() * 5;
+
+          star.style.left = `${left}%`;
+          star.style.top = `${top}%`;
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
+          star.style.transform = `scale(${size / 4})`;
+          star.style.animationDelay = `${delay}s`;
+
+          starsContainer.appendChild(star);
+        }
+
+        // 1. 找到原始元素
+        const originalElement = document.getElementById("stars");
+
+        // 2. 克隆元素，true参数表示连同所有子节点一起克隆
+        const clonedElement = originalElement.cloneNode(true);
+
+        // 3. 修改克隆后元素的 class 和 id
+        clonedElement.className = "stars2"; // 或者 clonedElement.classList.remove('stars'); clonedElement.classList.add('stars2');
+        clonedElement.id = "stars2";
+
+        // 4. 将克隆后的元素添加到页面中（例如，添加到原始元素的后面）
+        originalElement.parentNode.insertBefore(
+          clonedElement,
+          originalElement.nextSibling
+        );
+      }
 
 
       const crosshair = document.getElementById("crosshair2");
@@ -1871,67 +1942,7 @@ window.onload = function() {
         y = Math.min(y, window.innerHeight - 10);
       });
 
-      function load_background_height() {
-        const exam = document.getElementById("stars").offsetHeight / 2;
-        const exam2 = exam / 6;
-        const plus_bk = document.getElementsByClassName("plus")[0];
-        const geo_bk = document.getElementsByClassName("geograph")[0];
-        plus_bk.style.backgroundSize = `${exam2}px ${exam2}px`;
-        geo_bk.style.backgroundSize = `${exam}px ${exam}px`;
-        console.log(exam);
-        console.log(plus_bk.style.backgroundSize);
-        console.log(geo_bk.style.backgroundSize);
-      }
-      // 创建星星背景
-      function createStars() {
-        const starsContainer = document.getElementById("stars");
-        const starCount = 8;
 
-        for (let i = 0; i < starCount; i++) {
-          const star = document.createElement("div");
-          star.classList.add("star");
-
-          // 创建 vertical 元素并添加到 star 中
-          const vertical = document.createElement("div");
-          vertical.classList.add("vertical");
-          star.appendChild(vertical);
-
-          // 随机位置
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-
-          // 随机大小
-          const size = Math.random() * 3 + 1;
-
-          // 随机动画延迟
-          const delay = Math.random() * 5;
-
-          star.style.left = `${left}%`;
-          star.style.top = `${top}%`;
-          star.style.width = `${size}px`;
-          star.style.height = `${size}px`;
-          star.style.transform = `scale(${size / 4})`;
-          star.style.animationDelay = `${delay}s`;
-
-          starsContainer.appendChild(star);
-        }
-
-        // 1. 找到原始元素
-        const originalElement = document.getElementById("stars");
-
-        // 2. 克隆元素，true参数表示连同所有子节点一起克隆
-        const clonedElement = originalElement.cloneNode(true);
-
-        // 3. 修改克隆后元素的 class 和 id
-        clonedElement.className = "stars2"; // 或者 clonedElement.classList.remove('stars'); clonedElement.classList.add('stars2');
-        clonedElement.id = "stars2";
-
-        // 4. 将克隆后的元素添加到页面中（例如，添加到原始元素的后面）
-        originalElement.parentNode.insertBefore(
-          clonedElement,
-          originalElement.nextSibling
-        );
-      }
       var subcon = document.getElementById("subcontainer");
       // 页面切换功能
       function showPage(pageId) {
@@ -2017,8 +2028,12 @@ window.onload = function() {
 
       // 初始化
       document.addEventListener("DOMContentLoaded", function () {
+        
         load_background_height();
         createStars();
+        loaddocuments();
+        load_talent_page();
+        updatePointsDisplay();
         setupCharacterSelection();
         setupSettings();
         setupExit();
@@ -2159,7 +2174,7 @@ window.onload = function() {
         });
 
       // 初始化点数显示
-      updatePointsDisplay();
+      
 
       // 滚动到选中天赋的功能
       function scrollToTalent(talentId) {
@@ -2192,8 +2207,7 @@ window.onload = function() {
         });
       });
 
-      // 页面加载时确保内容适应
-      window.addEventListener("load", function () {
+      function load_talent_page() {
         const startGamePage = document.getElementById("start-game");
         const detailsContainer = document.querySelector(".character-details");
 
@@ -2227,7 +2241,7 @@ window.onload = function() {
 
         // 窗口大小变化时重新调整
         window.addEventListener("resize", adjustContainerHeight);
-      });
+      }
 
 
 
