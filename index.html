@@ -1867,8 +1867,9 @@ window.onload = function() {
             
             // 窗口大小改变时重新排列元素
             window.addEventListener('resize', function() {
-                placedElements.length = 0; // 清空已放置元素数组
                 
+                placedElements.length = 0; // 清空已放置元素数组
+
                 // 重新设置所有元素的位置
                 const elements = document.querySelectorAll('.scp-docontainer');
                 elements.forEach(element => {
@@ -1884,6 +1885,28 @@ window.onload = function() {
                         height: rect.height
                     });
                 });
+                /*
+                // 1. 找到原始元素
+                const originalElement = document.getElementById("stars");
+                const DELETEElement = document.getElementById("stars2");
+                if (DELETEElement) {
+                  DELETEElement.remove();
+                  console.log('delete');
+                }
+                
+
+                // 2. 克隆元素，true参数表示连同所有子节点一起克隆
+                const clonedElement = originalElement.cloneNode(true);
+
+                // 3. 修改克隆后元素的 class 和 id
+                clonedElement.className = "stars2"; // 或者 clonedElement.classList.remove('stars'); clonedElement.classList.add('stars2');
+                clonedElement.id = "stars2";
+
+                // 4. 将克隆后的元素添加到页面中（例如，添加到原始元素的后面）
+                originalElement.parentNode.insertBefore(
+                  clonedElement,
+                  originalElement.nextSibling
+                );*/
             });
         }
       
