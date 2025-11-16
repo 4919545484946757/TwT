@@ -21,10 +21,10 @@ class Weapon {
     setWeaponStats(type) {
         switch (type) {
             case 'pistol':
-                this.fireRate = 500;
-                this.damage = 10;
-                this.bulletSpeed = 300;
-                this.maxBullets = 10;
+                this.fireRate = 20;
+                this.damage = 50;
+                this.bulletSpeed = 900;
+                this.maxBullets = 20;
                 break;
             case 'shotgun':
                 this.fireRate = 800;

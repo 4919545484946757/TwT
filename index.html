@@ -88,7 +88,7 @@
         position: absolute;
         top: 0;
         left: -5%;
-        width: 110%;
+        width: auto;
         height: 110%;
         z-index: -2;
       }
@@ -168,9 +168,9 @@
         display: none;
         text-align: center;
         padding: 2rem;
-        border: 4px solid #8b4513;
-        background-color: #2a1e1570;
-        box-shadow: 0 0 0 4px #654321, 0 0 20px rgba(0, 0, 0, 0.7),
+        border: 4px solid #f4f4f4;
+        background-color: #2a2a2a70;
+        box-shadow: 0 0 0 4px #898989, 0 0 20px rgba(0, 0, 0, 0.7),
           inset 0 0 10px rgba(0, 0, 0, 0.5);
         max-width: 800px;
         width: 90%;
@@ -219,7 +219,7 @@
       .title {
         font-family: 'FusionPixel', sans-serif;
         font-size: 7rem;
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
         color: #c69c1e;
         text-shadow: 4px 4px 0 #303082, 6px 6px 0 #000;
         letter-spacing: 2px;
@@ -245,7 +245,7 @@
       }
 
       .subtitle {
-        font-size: 1.2rem;
+        font-size: 2rem;
         margin-bottom: 3rem;
         color: #c1851f;
         text-shadow: 2px 2px 0 #8b9296;
@@ -278,11 +278,12 @@
         padding: 1rem 2rem;
         font-family: 'FusionPixel', sans-serif;
         font-size: 1.6rem;
-        background: linear-gradient(to bottom, #976c1550 0%, #423010 100%);
+        background: linear-gradient(to bottom, #976c1531 0%, #42301046 100%);
         color: #fff;
         border: none;
-        border-bottom: 4px solid #353017;
-        border-right: 4px solid #483b20;
+        border-bottom: 3px solid #353017;
+        border-right: 6px solid #292112;
+        border-left: 6px solid #2a2212;
         cursor: pointer;
         transition: all 0.1s;
         text-shadow: 2px 2px 0 #000;
@@ -291,7 +292,7 @@
       }
 
       .btn:hover {
-        background: linear-gradient(to bottom, #b78521 0%, #6c5020 100%);
+        background: linear-gradient(to bottom, #b7852189 0%, #6c50207e 100%);
         transform: translateY(-2px);
         box-shadow: 15px 0px 13px rgba(220, 172, 14, 0.3);
       }
@@ -329,7 +330,7 @@
       }
 
       .btn-exit:hover {
-        background: linear-gradient(to bottom, #b53a3a 0%, #9b0000 100%);
+        background: linear-gradient(to bottom, #b53a3aa1 0%, #9b0000ab 100%);
         transform: translateY(-2px);
         box-shadow: 15px 0px 13px rgba(220, 38, 14, 0.3);
       }
@@ -345,15 +346,17 @@
       }
 
       .btn-back {
-        background: linear-gradient(to bottom, #666 0%, #444 100%);
-        border-bottom: 4px solid #333;
+        background: linear-gradient(to bottom, #66666630 0%, #44444430 100%);
+        border-bottom: 4px solid #33333340;
         border-right: 4px solid #333;
+        border-left: 4px solid #333;
         font-size: 0.9rem;
         padding: 0.7rem 1.5rem;
       }
 
       .btn-back:hover {
-        background: linear-gradient(to bottom, #777 0%, #555 100%);
+        background: linear-gradient(to bottom, #77777760 0%, #55555560 100%);
+        box-shadow: 15px 0px 13px #66666630;
       }
 
       .footer {
@@ -397,8 +400,8 @@
       .character {
         width: 120px;
         height: 120px;
-        background-color: #3a2c1e;
-        border: 4px solid #8b4513;
+        background-color: #9292927a;
+        border: 4px solid #303030;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -439,8 +442,8 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem;
-        background-color: #3a2c1e;
-        border: 2px solid #654321;
+        background-color: #9292927a;
+        border: 2px solid #303030;
       }
 
       .setting-label {
@@ -453,7 +456,7 @@
         appearance: none;
         width: 150px;
         height: 10px;
-        background: #654321;
+        background: #9292927a;
         outline: none;
       }
 
@@ -485,7 +488,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #654321;
+        background-color: #9292927a;
         transition: 0.4s;
       }
 
@@ -516,7 +519,7 @@
         overflow-y: auto;
         padding: 1rem;
         background-color: rgba(0, 0, 0, 0.3);
-        border: 2px solid #654321;
+        border: 2px solid #303030;
       }
 
       .credit-category {
@@ -564,8 +567,8 @@
       }
 
       .special-item {
-        background-color: #3a2c1e;
-        border: 2px solid #654321;
+        background-color: #9292927a;
+        border: 2px solid #303030;
         padding: 1rem;
         cursor: pointer;
         transition: all 0.2s;
@@ -665,8 +668,8 @@
 
       .character-details {
         margin: 0.5rem 0;
-        border: 4px solid #654321;
-        background-color: #2a1e15;
+        border: 4px solid #303030;
+        background-color: #9292927a;
         padding: 1.5rem;
         position: relative;
       }
@@ -685,7 +688,7 @@
         margin-bottom: 1rem;
         font-size: 1.5rem;
         text-shadow: 2px 2px 0 #000;
-        border-bottom: 2px solid #654321;
+        border-bottom: 2px solid #303030;
         padding-bottom: 0.5rem;
       }
 
@@ -703,9 +706,9 @@
       .stat-item {
         display: flex;
         align-items: center;
-        background-color: #3a2c1e;
+        background-color: #9292927a;
         padding: 0.5rem;
-        border: 2px solid #654321;
+        border: 2px solid #303030;
       }
 
       .stat-name {
@@ -750,8 +753,8 @@
       }
 
       .talent-branch {
-        background-color: #3a2c1e;
-        border: 2px solid #654321;
+        background-color: #9292927a;
+        border: 2px solid #303030;
         padding: 1rem;
         position: relative;
       }
@@ -761,7 +764,7 @@
         font-size: 1.1rem;
         margin-bottom: 1rem;
         text-align: center;
-        border-bottom: 1px solid #654321;
+        border-bottom: 1px solid #303030;
         padding-bottom: 0.5rem;
       }
 
@@ -777,8 +780,8 @@
         align-items: center;
         width: 80px;
         padding: 0.5rem;
-        background-color: #2a1e15;
-        border: 2px solid #654321;
+        background-color: #9292927a;
+        border: 2px solid #303030;
         cursor: pointer;
         transition: all 0.2s;
         position: relative;
@@ -791,7 +794,7 @@
 
       .talent-node.active {
         border-color: #4a752c;
-        background-color: #3a2c1e;
+        background-color: #303030;
       }
 
       .talent-icon {
@@ -816,8 +819,8 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
-        background-color: #3a2c1e;
-        border: 2px solid #654321;
+        background-color: #9292927a;
+        border: 2px solid #303030;
       }
 
       .points-display {
@@ -855,8 +858,8 @@
 
       .placeholder-stats {
         padding: 2rem;
-        background-color: #3a2c1e;
-        border: 2px dashed #654321;
+        background-color: #9292927a;
+        border: 2px dashed #303030;
         color: #666;
       }
 
@@ -873,7 +876,7 @@
 
       /* 开始游戏页面容器样式 */
       #start-game {
-        max-height: 80vh; /* 限制最大高度为视口的80% */
+        max-height: 85vh; /* 限制最大高度为视口的80% */
         width: 100%;
         padding: 1rem;
       }
@@ -881,8 +884,8 @@
       /* 角色详情区域样式 */
       .character-details {
         margin: 2rem 0;
-        border: 4px solid #654321;
-        background-color: #2a1e15;
+        border: 4px solid #d1d1d1;
+        background-color: #3434340a;
         padding: 1.5rem;
         position: relative;
         max-height: 40vh; /* 限制最大高度 */
@@ -898,7 +901,7 @@
 
       .character-details::-webkit-scrollbar-track {
         background: #2a1e15;
-        border: 2px solid #654321;
+        border: 2px solid #303030;
       }
 
       .character-details::-webkit-scrollbar-thumb {
@@ -1213,6 +1216,7 @@
       </div>
 
       <div class="subcontainer" id="subcontainer">
+        
         <!-- 边框装饰 -->
         <div class="corner corner-tl"></div>
         <div class="corner corner-tr"></div>
@@ -1220,6 +1224,10 @@
         <div class="corner corner-br"></div>
         <!-- 开始游戏页面 -->
         <div class="page" id="start-game">
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
           <h1 class="subsubtitle">选择职业</h1>
 
           <div class="character-selection">
@@ -1291,7 +1299,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="talents-container">
                 <h2 class="section-title">天赋加点</h2>
                 <div class="talent-tree">
@@ -1299,25 +1306,25 @@
                     <h3 class="branch-title">射击专精</h3>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="steady-aim">
-                        <div class="talent-icon">🎯</div>
-                        <div class="talent-name">稳定瞄准</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">三角稳固</div>
                         <div class="talent-level">0/5</div>
                       </div>
                       <div class="talent-node" data-talent="rapid-fire">
-                        <div class="talent-icon">💥</div>
-                        <div class="talent-name">快速射击</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">强大火力</div>
                         <div class="talent-level">0/3</div>
                       </div>
                     </div>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="sniper-mastery">
-                        <div class="talent-icon">🎯</div>
-                        <div class="talent-name">狙击精通</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">遥击</div>
                         <div class="talent-level">0/3</div>
                       </div>
                       <div class="talent-node" data-talent="vital-shot">
-                        <div class="talent-icon">❤️</div>
-                        <div class="talent-name">要害射击</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">靶向打击</div>
                         <div class="talent-level">0/3</div>
                       </div>
                     </div>
@@ -1327,26 +1334,26 @@
                     <h3 class="branch-title">生存能力</h3>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="toughness">
-                        <div class="talent-icon">🛡️</div>
-                        <div class="talent-name">坚韧体魄</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">屹立不倒</div>
                         <div class="talent-level">0/5</div>
                       </div>
                       <div class="talent-node" data-talent="field-medic">
-                        <div class="talent-icon">💊</div>
-                        <div class="talent-name">战地医疗</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">信春哥!</div>
                         <div class="talent-level">0/3</div>
                       </div>
                     </div>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="evasion">
-                        <div class="talent-icon">👟</div>
-                        <div class="talent-name">闪避技巧</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">无影匿形</div>
                         <div class="talent-level">0/3</div>
                       </div>
                       <div class="talent-node" data-talent="last-stand">
-                        <div class="talent-icon">🔥</div>
-                        <div class="talent-name">背水一战</div>
-                        <div class="talent-level">0/1</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">意志</div>
+                        <div class="talent-level">0/10</div>
                       </div>
                     </div>
                   </div>
@@ -1355,25 +1362,25 @@
                     <h3 class="branch-title">战术装备</h3>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="grenade-expert">
-                        <div class="talent-icon">💣</div>
-                        <div class="talent-name">手雷专家</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">重火力</div>
                         <div class="talent-level">0/3</div>
                       </div>
                       <div class="talent-node" data-talent="tactical-reload">
-                        <div class="talent-icon">🔁</div>
+                        <div class="talent-icon">[+]</div>
                         <div class="talent-name">战术装填</div>
                         <div class="talent-level">0/3</div>
                       </div>
                     </div>
                     <div class="talent-row">
                       <div class="talent-node" data-talent="suppressing-fire">
-                        <div class="talent-icon">🔇</div>
-                        <div class="talent-name">压制火力</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">强袭压制</div>
                         <div class="talent-level">0/3</div>
                       </div>
                       <div class="talent-node" data-talent="combat-engineer">
-                        <div class="talent-icon">🛠️</div>
-                        <div class="talent-name">战斗工兵</div>
+                        <div class="talent-icon">[+]</div>
+                        <div class="talent-name">知识分子</div>
                         <div class="talent-level">0/3</div>
                       </div>
                     </div>
@@ -1429,7 +1436,12 @@
 
         <!-- 设置页面 -->
         <div class="page" id="settings">
-          <h1 class="title">设置</h1>
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+
+          <h1 class="subtitle">设置</h1>
 
           <div class="settings-grid">
             <div class="setting-item">
@@ -1474,7 +1486,7 @@
                 style="
                   background: #3a2c1e;
                   color: white;
-                  border: 2px solid #654321;
+                  border: 2px solid #9292927a;
                   padding: 5px;
                 "
               >
@@ -1489,7 +1501,7 @@
                 style="
                   background: #3a2c1e;
                   color: white;
-                  border: 2px solid #654321;
+                  border: 2px solid #9292927a;
                   padding: 5px;
                 "
               >
@@ -1510,7 +1522,7 @@
 
         <!-- 致谢名单页面 -->
         <div class="page" id="credits">
-          <h1 class="title">致谢名单</h1>
+          <h1 class="subtitle">致谢名单</h1>
 
           <div class="credits-list">
             <div class="credit-category">
@@ -1552,7 +1564,7 @@
 
         <!-- 退出游戏页面 -->
         <div class="page" id="exit-game">
-          <h1 class="title">退出游戏</h1>
+          <h1 class="subtitle">退出游戏</h1>
 
           <div class="exit-confirmation">
             <div class="exit-message">确定要退出游戏吗？</div>
@@ -1570,7 +1582,7 @@
 
         <!-- 特典页面 -->
         <div class="page" id="special">
-          <h1 class="title">特典</h1>
+          <h1 class="subtitle">特典</h1>
 
           <div class="special-content">
             <div class="special-item">
@@ -1720,17 +1732,20 @@ window.onload = function() {
                 const elementHeight = element.offsetHeight;
                 
                 // 计算最大可放置位置
-                const maxLeft = containerWidth - elementWidth;
+                const maxLeft = containerWidth - (1.4 * elementWidth);
                 const maxTop = containerHeight - elementHeight;
                 
                 let attempts = 0;
                 let validPosition = false;
+
                 
                 // 尝试找到合适的位置
-                while (attempts < 10 && !validPosition) {
+                while (attempts < 40 && !validPosition) {
                     // 生成随机位置
-                    const randomLeft = Math.floor(Math.random() * maxLeft);
+                    const randomLeft = Math.floor(Math.random() * maxLeft) +  (0.4 * elementWidth);
                     const randomTop = Math.floor(Math.random() * maxTop);
+                    // 随机动画延迟
+                    const delay = Math.random() * 3;
                     
                     // 检查是否与已放置元素距离足够
                     validPosition = true;
@@ -1739,7 +1754,7 @@ window.onload = function() {
                             randomLeft, randomTop, elementWidth, elementHeight,
                             placed.left, placed.top, placed.width, placed.height
                         );
-                        
+
                         if (distance < minDistance) {
                             validPosition = false;
                             break;
@@ -1750,12 +1765,13 @@ window.onload = function() {
                     if (validPosition) {
                         element.style.left = `${randomLeft}px`;
                         element.style.top = `${randomTop}px`;
+                        element.style.animationDelay = `${delay}s`;
                     }
                     
                     attempts++;
                 }
                 
-                // 如果尝试100次后仍未找到合适位置，使用最后一次尝试的位置
+                // 如果尝试10次后仍未找到合适位置，使用最后一次尝试的位置
                 if (!validPosition) {
                     const randomLeft = Math.floor(Math.random() * maxLeft);
                     const randomTop = Math.floor(Math.random() * maxTop);
@@ -1770,7 +1786,7 @@ window.onload = function() {
                 const centerY1 = y1 + h1 / 2;
                 const centerX2 = x2 + w2 / 2;
                 const centerY2 = y2 + h2 / 2;
-                
+
                 return Math.sqrt(Math.pow(centerX2 - centerX1, 2) + Math.pow(centerY2 - centerY1, 2));
             }
             

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光标到玩家位置连线</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: rgba(30, 30, 60, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        #playerBox {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.7);
+            transition: all 0.3s ease;
+            cursor: move;
+            user-select: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        #playerBox:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        #cursorLine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .position-info {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 200px;
+            margin: 5px;
+        }
+        
+        .position-info h3 {
+            margin-top: 0;
+            color: #4facfe;
+        }
+        
+        .coordinates {
+            font-family: monospace;
+            font-size: 16px;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #4facfe;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #00c6fb;
+            transform: translateY(-2px);
+        }
+        
+        .line-style {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .line-style input {
+            width: 60px;
+        }
+        
+        .line-style label {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>光标到玩家位置连线</h1>
+    
+    <div class="container">
+        <div class="game-area" id="gameArea">
+            <div id="playerBox">玩家</div>
+            <svg id="cursorLine"></svg>
+        </div>
+        
+        <div class="info-panel">
+            <div class="position-info">
+                <h3>光标位置</h3>
+                <div class="coordinates">X: <span id="cursorX">0</span>px</div>
+                <div class="coordinates">Y: <span id="cursorY">0</span>px</div>
+            </div>
+            
+            <div class="position-info">
+                <h3>玩家位置</h3>
+                <div class="coordinates">X: <span id="playerX">0</span>px</div>
+                <div class="coordinates">Y: <span id="playerY">0</span>px</div>
+            </div>
+            
+            <div class="position-info">
+                <h3>连线信息</h3>
+                <div class="coordinates">长度: <span id="lineLength">0</span>px</div>
+                <div class="coordinates">角度: <span id="lineAngle">0</span>°</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="toggleLine">隐藏/显示连线</button>
+            <button id="resetPlayer">重置玩家位置</button>
+        </div>
+        
+        <div class="line-style">
+            <label for="lineWidth">线条粗细:</label>
+            <input type="range" id="lineWidth" min="1" max="10" value="2">
+            
+            <label for="lineColor">线条颜色:</label>
+            <input type="color" id="lineColor" value="#ff4081">
+        </div>
+        
+        <div class="instructions">
+            提示: 在游戏区域移动鼠标查看连线效果，拖动玩家盒子可以改变位置
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const gameArea = document.getElementById('gameArea');
+        const playerBox = document.getElementById('playerBox');
+        const cursorLine = document.getElementById('cursorLine');
+        const cursorX = document.getElementById('cursorX');
+        const cursorY = document.getElementById('cursorY');
+        const playerX = document.getElementById('playerX');
+        const playerY = document.getElementById('playerY');
+        const lineLength = document.getElementById('lineLength');
+        const lineAngle = document.getElementById('lineAngle');
+        const toggleLineBtn = document.getElementById('toggleLine');
+        const resetPlayerBtn = document.getElementById('resetPlayer');
+        const lineWidthInput = document.getElementById('lineWidth');
+        const lineColorInput = document.getElementById('lineColor');
+        
+        // 位置对象
+        let cursorPosition = { x: 0, y: 0 };
+        let playerBoxPosition = { x: 0, y: 0 };
+        
+        // 是否显示连线
+        let showLine = true;
+        
+        // 初始化玩家位置
+        function initPlayerPosition() {
+            playerBoxPosition = {
+                x: playerBox.offsetLeft + playerBox.offsetWidth / 2,
+                y: playerBox.offsetTop + playerBox.offsetHeight / 2
+            };
+            updatePlayerPositionDisplay();
+        }
+        
+        // 更新玩家位置显示
+        function updatePlayerPositionDisplay() {
+            playerX.textContent = Math.round(playerBoxPosition.x);
+            playerY.textContent = Math.round(playerBoxPosition.y);
+        }
+        
+        // 更新光标位置
+        function updateCursorPosition(event) {
+            cursorPosition.x = event.clientX - gameArea.getBoundingClientRect().left;
+            cursorPosition.y = event.clientY - gameArea.getBoundingClientRect().top;
+            
+            cursorX.textContent = Math.round(cursorPosition.x);
+            cursorY.textContent = Math.round(cursorPosition.y);
+            
+            drawLine();
+        }
+        
+        // 绘制连线
+        function drawLine() {
+            // 清空之前的线
+            cursorLine.innerHTML = '';
+            
+            if (!showLine) return;
+            
+            // 计算玩家盒子中心位置
+            playerBoxPosition = {
+                x: playerBox.offsetLeft + playerBox.offsetWidth / 2,
+                y: playerBox.offsetTop + playerBox.offsetHeight / 2
+            };
+            
+            // 创建SVG线
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', playerBoxPosition.x);
+            line.setAttribute('y1', playerBoxPosition.y);
+            line.setAttribute('x2', cursorPosition.x);
+            line.setAttribute('y2', cursorPosition.y);
+            line.setAttribute('stroke', lineColorInput.value);
+            line.setAttribute('stroke-width', lineWidthInput.value);
+            line.setAttribute('stroke-dasharray', '5,5');
+            
+            // 添加到SVG
+            cursorLine.appendChild(line);
+            
+            // 更新连线信息
+            updateLineInfo();
+        }
+        
+        // 更新连线信息
+        function updateLineInfo() {
+            const dx = cursorPosition.x - playerBoxPosition.x;
+            const dy = cursorPosition.y - playerBoxPosition.y;
+            
+            // 计算长度
+            const length = Math.sqrt(dx * dx + dy * dy);
+            lineLength.textContent = Math.round(length);
+            
+            // 计算角度（以度为单位）
+            let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            if (angle < 0) angle += 360;
+            lineAngle.textContent = Math.round(angle);
+        }
+        
+        // 切换连线显示
+        toggleLineBtn.addEventListener('click', () => {
+            showLine = !showLine;
+            drawLine();
+        });
+        
+        // 重置玩家位置
+        resetPlayerBtn.addEventListener('click', () => {
+            playerBox.style.left = '50%';
+            playerBox.style.top = '50%';
+            playerBox.style.transform = 'translate(-50%, -50%)';
+            initPlayerPosition();
+            drawLine();
+        });
+        
+        // 拖动玩家盒子
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        
+        playerBox.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            
+            // 计算鼠标相对于玩家盒子中心的偏移
+            const rect = playerBox.getBoundingClientRect();
+            dragOffset.x = e.clientX - (rect.left + rect.width / 2);
+            dragOffset.y = e.clientY - (rect.top + rect.height / 2);
+            
+            playerBox.style.cursor = 'grabbing';
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            // 计算新的位置
+            const gameRect = gameArea.getBoundingClientRect();
+            let newX = e.clientX - gameRect.left - dragOffset.x;
+            let newY = e.clientY - gameRect.top - dragOffset.y;
+            
+            // 限制在游戏区域内
+            newX = Math.max(0, Math.min(newX, gameArea.offsetWidth - playerBox.offsetWidth));
+            newY = Math.max(0, Math.min(newY, gameArea.offsetHeight - playerBox.offsetHeight));
+            
+            // 应用新位置
+            playerBox.style.left = newX + 'px';
+            playerBox.style.top = newY + 'px';
+            playerBox.style.transform = 'none';
+            
+            // 更新位置和连线
+            initPlayerPosition();
+            drawLine();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            playerBox.style.cursor = 'move';
+        });
+        
+        // 监听鼠标移动
+        gameArea.addEventListener('mousemove', updateCursorPosition);
+        
+        // 监听线条样式变化
+        lineWidthInput.addEventListener('input', drawLine);
+        lineColorInput.addEventListener('input', drawLine);
+        
+        // 初始化
+        initPlayerPosition();
+        drawLine();
+    </script>
+</body>
+</html>

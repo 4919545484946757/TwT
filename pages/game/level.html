@@ -3,9 +3,614 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>玩家视线连线</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+        }
+        @font-face {
+            font-family: 'FusionPixel';
+            src: url('../../assets/fonts/fusion-pixel-12px-monospaced-zh_hans.ttf') format('truetype');
+        }
+        body {
+            font-family: 'FusionPixel', sans-serif;
+            font-size: 12px;
+            background-color: #000000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .game-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .screen {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85px;
+            height: 85px;
+            background-color: #fff;
+            background-image: url('asset/imgs/girl-blue/stand-normal/girl-right_px.png');
+            background-size: 120%;
+            background-repeat: no-repeat;
+            background-position: -7px -8px;
+            box-shadow: 0 0 10px #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.1s ease;
+            animation: all 0.2s ease-in-out;
+            transform-origin: center center;
+        }
+        .player-box {
+            position: absolute;
+            top: 0;
+            margin: auto;
+            width: 60%;
+            height: 100%;
+            display: flex;
+            border: 2px solid aqua;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .SCP-610 {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            transform: translate(-50%, -50%);
+            width: 85px;
+            height: 85px;
+            background-color: #d20000;
+            background-image: url('asset/imgs/girl-blue/stand-normal/girl-right_px.png');
+            background-size: 120%;
+            background-repeat: no-repeat;
+            background-position: -7px -8px;
+            box-shadow: 0 0 10px #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.1s ease;
+        }
+        .SCP-box {
+            position: absolute;
+            top: 0;
+            margin: auto;
+            width: 60%;
+            height: 100%;
+            display: flex;
+            border: 2px solid aqua;
+            justify-content: center;
+            align-items: center;
+        }
+        .entity-box {
+            position: absolute;
+            top: 0;
+            margin: auto;
+            width: 60%;
+            height: 100%;
+            display: flex;
+            border: 2px solid aqua;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #map1 {
+            position: absolute;
+            width: 90000px;
+            height: 90000px;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            background-image: url(asset/imgs/maps/area_render_3_.png);
+            background-size: 550px;
+            
+            z-index: -1;
+        }
+        .gazing-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #00ffff;
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #00ffff;
+        }
+        button {
+            background: #00ffff;
+            border: none;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'FusionPixel', sans-serif;
+        }
+        button:hover {
+            background: #00cccc;
+        }
+    </style>
 </head>
 <body>
+    <div class="game-container">
+        <div class="screen">
+            <div class="map" id="map1">
+                <!-- 地图内容 -->
+                <div class="SCP-610 SCP">
+                    <div class="SCP-box entity-box entity-box"></div>
+                </div>
+            </div>
+            <svg class="gazing-line" id="gazing-line"></svg>
+            <div class="player" id="player">
+                <div class="player-box" id="player-box"></div>
+            </div>
+        </div>
+    </div>
     
+    <div class="info-panel">
+        <div>光标位置: <span id="cursor-position">0, 0</span></div>
+        <div>玩家位置: <span id="player-position">0, 0</span></div>
+        <div>视线角度: <span id="gazing-angle">0°</span></div>
+    </div>
+    
+    <div class="controls">
+        <button id="toggle-line">切换视线</button>
+        <button id="reset-player">重置位置</button>
+    </div>
+
+    <script>
+        // 获取元素
+        const cursorLine = document.getElementById('gazing-line');
+        const player = document.getElementById("player");
+        const playerBox = document.getElementById("player-box");
+        const cursorPositionDisplay = document.getElementById('cursor-position');
+        const playerPositionDisplay = document.getElementById('player-position');
+        const gazingAngleDisplay = document.getElementById('gazing-angle');
+        const toggleLineBtn = document.getElementById('toggle-line');
+        const resetPlayerBtn = document.getElementById('reset-player');
+        
+        // 玩家类
+        class Player {
+            constructor(job, isRun, HP, MP) {
+                this.job = job;
+                this.isRun = isRun;
+                this.HP = HP;
+                this.MP = MP;
+            }
+            isplayer1 = true;
+        }
+        
+        const player1 = new Player("rifleman", false, 100, 100);
+
+
+        // 状态变量
+        let showLine = true;
+        let tick = 0;
+        let cursorPosition = { x: 0, y: 0 };
+        let gazingDirection = 0;
+        let isMove = false;
+        
+        // 初始化
+        document.addEventListener("DOMContentLoaded", function () {
+            // 初始化玩家位置
+            resetPlayerPosition();
+            
+            // 监听鼠标移动
+            document.addEventListener("mousemove", function (event) {
+                cursorPosition.x = event.clientX;
+                cursorPosition.y = event.clientY;
+                
+                // 更新显示
+                cursorPositionDisplay.textContent = `${Math.round(cursorPosition.x)}, ${Math.round(cursorPosition.y)}`;
+                
+                // 计算视线方向并绘制连线
+                getGazingDirection();
+                drawLine();
+            });
+            
+            
+            // 开始游戏循环
+            Ticks();
+            
+            // 添加按钮事件
+            toggleLineBtn.addEventListener('click', toggleLine);
+            resetPlayerBtn.addEventListener('click', resetPlayerPosition);
+        });
+        
+        // 游戏循环
+        function Ticks() {
+            setInterval(updateTicks, 5);
+        }
+        let isIntreval = false;
+        let animate_mv;
+        function updateTicks() {
+            tick++;
+            const speed = isShiftPressed ? 2 : 1;
+
+            // 处理需要持续响应的“持续动作”（如移动）
+            // 因为这些 if 语句是独立的，所以可以同时满足多个条件
+            if (keysPressed.has(87)) { // "W"
+                moveUp(player1, speed);
+                mvAnimation();
+            }
+            if (keysPressed.has(65)) { // "A"
+                moveLeft(player1, speed);
+                mvAnimation();
+            }
+            if (keysPressed.has(83)) { // "S"
+                moveDown(player1, speed);
+                mvAnimation();
+            }
+            if (keysPressed.has(68)) { // "D"
+                moveRight(player1, speed);
+                mvAnimation();
+            }
+            if (!keysPressed.has(87) &&!keysPressed.has(65) &&!keysPressed.has(83) &&!keysPressed.has(68)) {
+                delmvAnimation();
+            }
+            if (isMoving) {
+                if (!isIntreval){
+                    animate_mv = setInterval(PlaymvAnimation, 100);
+                }
+                isIntreval = true;
+            } else {
+                if (isIntreval) {
+                    clearInterval(animate_mv);
+                    player.style.backgroundImage = "url('asset/imgs/girl-blue/stand-normal/girl-right_px.png')";
+                    isIntreval = false;
+                }
+            }
+
+            // 更新玩家位置显示
+            updatePlayerPositionDisplay();
+            updateSCPsPosition();
+            Rplayer_x = -player_x + window.innerWidth / 2;
+            Rplayer_y = - 85 -player_y + window.innerHeight / 2;
+
+        }
+        
+        // 更新玩家位置显示
+        function updatePlayerPositionDisplay() {
+            const playerRect = player.getBoundingClientRect();
+            playerPositionDisplay.textContent = `${Math.round(playerRect.left + playerRect.width/2)}, ${Math.round(playerRect.top + playerRect.height/2)}`;
+        }
+        
+        // 获取视线方向
+        function getGazingDirection() {
+            const playerRect = player.getBoundingClientRect();
+            const playerCenterX = playerRect.left + playerRect.width / 2;
+            const playerCenterY = playerRect.top + playerRect.height / 2;
+            
+            gazingDirection = Math.atan2(
+                cursorPosition.y - playerCenterY,
+                cursorPosition.x - playerCenterX
+            );
+            
+            // 转换为角度并显示
+            const angleDeg = Math.round(gazingDirection * 180 / Math.PI);
+            gazingAngleDisplay.textContent = `${angleDeg}°`;
+            
+            return gazingDirection;
+        }
+        
+        // 绘制视线连线
+        function drawLine() {
+            // 清空之前的线
+            cursorLine.innerHTML = '';
+            
+            if (!showLine) return;
+            
+            // 获取玩家中心位置
+            const playerRect = player.getBoundingClientRect();
+            const playerCenterX = playerRect.left + playerRect.width / 2;
+            const playerCenterY = playerRect.top + playerRect.height / 2;
+            
+            // 创建SVG线
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', playerCenterX);
+            line.setAttribute('y1', playerCenterY);
+            line.setAttribute('x2', cursorPosition.x);
+            line.setAttribute('y2', cursorPosition.y);
+            line.setAttribute('stroke', '#ff4081');
+            line.setAttribute('stroke-width', 2);
+            line.setAttribute('stroke-dasharray', '5,5');
+            
+            // 添加到SVG
+            cursorLine.appendChild(line);
+        }
+        
+        // 切换视线显示
+        function toggleLine() {
+            showLine = !showLine;
+            drawLine();
+        }
+        
+        // 重置玩家位置
+        function resetPlayerPosition() {
+            player.style.left = '50%';
+            player.style.top = '50%';
+            player.style.transform = 'translate(-50%, -50%)';
+            drawLine();
+        }
+        
+        // 加载快捷键
+
+            const keysPressed = new Set();
+            // 单独记录 Shift 键的状态，方便判断加速
+            let isShiftPressed = false;
+
+            // --- 2. 事件监听器（只负责更新状态） ---
+
+            // 键盘按下时：更新状态，并处理瞬时动作
+            document.addEventListener("keydown", function (event) {
+                // 防止长按时重复触发瞬时动作
+                if (keysPressed.has(event.keyCode)) {
+                    return;
+                }
+
+                keysPressed.add(event.keyCode);
+                if (event.keyCode === 16) { // 16 是 Shift 键的码
+                    isShiftPressed = true;
+                    console.log("Shift 键按下");
+                }
+
+                // 处理只需要触发一次的“瞬时动作”
+                switch (event.keyCode) {
+                    // "E" - 打开背包
+                    case 69:
+                        OpenBag(player1);
+                        break;
+                    // "F" - 互动
+                    case 70:
+                        interact(player1);
+                        break;
+                    // "R" - 换弹
+                    case 82:
+                        reload(player1);
+                        break;
+                    // "H" - 切换视线
+                    case 72:
+                        toggleLine();
+                        break;
+                }
+
+                // 阻止默认行为，比如方向键滚动页面、空格键滚动等
+                if ([32, 37, 38, 39, 40, 69, 70, 82, 72].indexOf(event.keyCode) > -1) {
+                    event.preventDefault();
+                }
+            });
+
+            // 键盘抬起时：更新状态
+            document.addEventListener("keyup", function (event) {
+                keysPressed.delete(event.keyCode);
+                if (event.keyCode === 16) {
+                    console.log("Shift 键抬起");
+                    isShiftPressed = false;
+
+                }
+            });
+            document.addEventListener("mousedown", function (event) {
+                switch (event.button) {
+                    // 鼠标左键
+                    case 0:
+                        leftClick();
+                        break;
+                    // 鼠标右键
+                    case 2:
+                        rightClick();
+                        break;
+                    // 鼠标中键
+                    case 1:
+                        break;
+                }
+                
+            });
+            document.addEventListener("mouseup", function (event) {
+                switch (event.button) {
+                    // 鼠标左键
+                    case 0:
+                        leftClick();
+                        break;
+                    // 鼠标右键
+                    case 2:
+                        rightClick();
+                        break;
+                    // 鼠标中键
+                    case 1:
+                        break;
+                }
+            });
+        
+        
+        const map1 = document.getElementById("map1");
+        let player_y = 0;
+        let player_x = 0;
+        let Rplayer_x = 0;
+        let Rplayer_y = 0;
+
+        let isMoving = false;
+        // 移动函数
+        function moveUp(who, speed) {
+            player_y -= speed;
+            map1.style.bottom = player_y + "px";
+            updateDire(who, "up");
+        }
+
+        function moveLeft(who, speed) {
+            player_x += speed;
+            map1.style.left = player_x + "px";
+            updateDire(who, "left");
+        }
+        
+        function moveDown(who, speed) {
+            player_y += speed;
+            map1.style.bottom = player_y + "px";
+            updateDire(who, "down");
+        }
+        
+        function moveRight(who, speed) {
+            player_x -= speed;
+            map1.style.left = player_x + "px";
+            updateDire(who, "right");
+        }
+
+
+        let isShooting = false;
+        let attacker;
+        function leftClick() {
+            console.log("射击触发");
+            if (!isShooting) {
+                shoot();
+                attacker = setInterval(shoot, 70);
+                isShooting = true;
+            } else {
+                clearInterval(attacker);
+                isShooting = false;
+            }
+        }
+        let isAiming = false;
+        function rightClick() {
+            console.log("瞄准触发");
+            if (!isAiming) {
+                isAiming = true;
+            } else {
+                isAiming = false;
+            }
+        }
+        function shoot() {
+            console.log("射击");
+        }
+        
+        
+        // 占位函数 - 需要根据游戏逻辑实现
+        function OpenBag(who) {
+            console.log("打开背包");
+        }
+        
+        function interact(who) {
+            console.log("互动");
+        }
+        
+        function reload(who) {
+            console.log("重新加载");
+        }
+        
+        function updateDire(who, direction) {
+            switch (direction) {
+                case "left":
+                    player.style.transform = "scaleX(-1)"
+                    break;
+                case "right":
+                    player.style.transform = "scaleX(1)"
+                    break;
+            }
+        }
+        function mvAnimation() {
+            isMoving = true;
+        }
+        function delmvAnimation() {
+            isMoving = false;
+            
+        }
+        let animate_mv_tick = 0;
+        function PlaymvAnimation() {
+            if (isShiftPressed) {
+                if (animate_mv_tick == 0) {
+                    animate_mv_tick = 1;
+                    player.style.backgroundImage = "url('asset/imgs/girl-blue/run-animate/girl-right-run-01t_px.png')";
+                } else {
+                    animate_mv_tick = 0;
+                    player.style.backgroundImage = "url('asset/imgs/girl-blue/run-animate/girl-right-run-02t_px.png')";
+                }
+            } else {
+                if (animate_mv_tick == 0) {
+                    animate_mv_tick = 1;
+                    player.style.backgroundImage = "url('asset/imgs/girl-blue/walk-normal/girl-right-walk-01t_px.png')";
+                } else {
+                    animate_mv_tick = 0;
+                    player.style.backgroundImage = "url('asset/imgs/girl-blue/walk-normal/girl-right-walk-02t_px.png')";
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        console.log(map1.style.left)
+        const SCPs = document.getElementsByClassName("SCP");
+        const SCPsBox = document.getElementsByClassName("SCP-box");
+        let SCPs_y = 0;
+        let SCPs_x = 0;
+        console.log(SCPs);
+        console.log(SCPsBox);
+        console.log(SCPs[0].style.left);
+        console.log(SCPs[0].style.bottom);
+        function updateSCPsPosition() {
+            for (let i = 0; i < SCPs.length; i++) 
+            {
+                // if (PosAvailable(SCPs[i].style.left, SCPs[i].style.bottom))
+                if (SCPs_x < Rplayer_x - 50){
+                    SCPs_x += 0.5;
+                    SCPs[i].style.left = SCPs_x + "px";
+                } else if (SCPs_x > Rplayer_x + 50){
+                    SCPs_x -= 0.5;
+                    SCPs[i].style.left = SCPs_x + "px";
+                }
+                if (SCPs_y < Rplayer_y - 45){
+                    SCPs_y += 0.5;
+                    SCPs[i].style.bottom = SCPs_y + "px";
+                } else if (SCPs_y > Rplayer_y + 45){
+                    SCPs_y -= 0.5;
+                    SCPs[i].style.bottom = SCPs_y + "px";
+                }
+
+            }
+        };
+    </script>
 </body>
 </html>
