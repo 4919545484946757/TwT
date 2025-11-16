@@ -43,10 +43,10 @@
       }
       .stars {
         position: absolute;
-        top: 0;
+        top: 50%;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 50%;
 
         /*background-color: aqua;*/
         
@@ -57,10 +57,10 @@
       .stars2 {
         margin: 0;
         position: absolute;
-        top: -100%;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 50%;
 
         /*background-color: aqua;*/
         z-index: -1;
@@ -98,7 +98,7 @@
           transform: translateY(0);
         }
         100% {
-          transform: translateY(100%);
+          transform: translateY(50%);
         }
       }
 
@@ -119,7 +119,7 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        border: 1px solid white;
+        border: 1.5px solid white;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         z-index: 10;
       }
@@ -128,14 +128,14 @@
         content: "";
         position: absolute;
         width: 180px;
-        height: 1px;
+        height: 1.5px;
         background: white;
         box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
       }
 
       .star .vertical {
         position: absolute;
-        width: 1px;
+        width: 1.5px;
         height: 180px;
         background: white;
         box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
@@ -1122,6 +1122,70 @@
         width: 100%;
       }
       
+      .info-display {
+        width: 400px;
+        height: 300px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+      .info-container {
+        width: 100%;
+        height: 100%;
+        border: 8px #ffffff50;
+        border-style: double;
+        overflow:hidden;
+        background-color: #92929215;
+        clip-path: polygon(
+          100px 0,
+          100% 0,
+          100% 100%,
+          0 100%,
+          0 80px
+        );
+        animation: twinkle 4s infinite;
+      }
+      .info-item {
+        font-size: 24px;
+        
+      }
+      .info-img {
+        width: 150px;
+        height: 150px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-image: url('assets/svg/SCP_Foundation.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        animation: twinkle 3s infinite;
+        animation: scrollc 3s;
+      }
+      @keyframes scrollc {
+        0% {
+
+        }
+        100% {
+          transform: rotate(1turn);
+        }
+      }
+    
+      .info-p {
+        margin-bottom: 10px;
+        font-size: 24px;
+        position: relative;
+        left: -28px;
+      }
+      .info-input {
+        font-family: 'FusionPixel', sans-serif;
+        font-size: 18px;
+        align-items: center;
+        text-align: center;
+        width: 170px;
+        height: 27px;
+        position: relative;
+        top: -5px;
+      }
 
 
     </style>
@@ -1185,6 +1249,17 @@
     <div class="pixel-art pixel-2"></div>
 
     <div class="container">
+
+      <div class="info-display">
+        <div class="info-container">
+          <div class="info-item"> - no sign - </div>
+          <div class="info-img">
+
+          </div>
+          <P class="info-p">ACC: <input class="info-input" value="[DATA REDACTED]"></p>
+          <P class="info-p">PSW: <input class="info-input" value="[ VALUE ERROR ]"></p>
+        </div>
+      </div>
       <!-- 边框装饰 -->
       <div class="corner corner-tl"></div>
       <div class="corner corner-tr"></div>
@@ -1586,27 +1661,27 @@
 
           <div class="special-content">
             <div class="special-item">
-              <div class="special-icon">🎨</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">美术设定集</div>
             </div>
             <div class="special-item">
-              <div class="special-icon">🎵</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">原声音乐</div>
             </div>
             <div class="special-item">
-              <div class="special-icon">📖</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">背景故事</div>
             </div>
             <div class="special-item">
-              <div class="special-icon">🖼️</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">壁纸收藏</div>
             </div>
             <div class="special-item">
-              <div class="special-icon">🎮</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">隐藏关卡</div>
             </div>
             <div class="special-item">
-              <div class="special-icon">👤</div>
+              <div class="special-icon">[ls]</div>
               <div class="special-name">角色皮肤</div>
             </div>
           </div>
@@ -1819,7 +1894,7 @@ window.onload = function() {
 
 
       function load_background_height() {
-        const exam = document.getElementById("stars").offsetHeight / 4;
+        const exam = document.getElementById("stars").offsetHeight / 2;
         const exam2 = exam / 6;
         const plus_bk = document.getElementsByClassName("plus")[0];
         const geo_bk = document.getElementsByClassName("geograph")[0];
