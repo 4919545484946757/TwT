@@ -11,12 +11,6 @@
         padding: 0;
         box-sizing: border-box;
         image-rendering: pixelated;
-        
-
-        -webkit-user-select: none;  /* Chrome, Safari, Opera */
-        -moz-user-select: none;     /* Firefox */
-        -ms-user-select: none;      /* IE 10+ */
-        user-select: none;          /* 标准语法 */
       }
       @font-face {
             font-family: 'FusionPixel';
@@ -1703,70 +1697,7 @@
     
 
     <script>
-      /*const audioCache = {
 
-      };
-      const soundPaths = {
-        click: 'assets/audio/clickbtn.mp3',
-        hover: 'assets/audio/hoverbtn.mp3',
-      };
-
-      document.querySelectorAll('.btn').forEach(btn => {
-        const soundName = btn.dataset.sound; // 这里存的是名字，如 'click'
-        const soundPath = soundPaths[soundName];
-        
-        if (!audioCache[soundPath]) {
-          audioCache[soundPath] = new Audio(soundPath);
-          audioCache[soundPath].load();
-        }
-        
-        btn.addEventListener('mouseenter', () => {
-          const audio = audioCache[soundPath];
-          audio.currentTime = 0;
-          audio.play().catch(e => console.log('音频播放失败:', e));
-          console.log("speak");
-        });
-      });*/
-
-
-      // 创建音频元素
-        const hoverSound = new Audio('assets/audio/hoverbtn.mp3');
-        const clickSound = new Audio('assets/audio/clickbtn.mp3');
-        
-        // 设置音频属性
-        hoverSound.volume = 0.4;
-        clickSound.volume = 0.6;
-        
-        // 获取所有按钮元素
-        const buttons = document.querySelectorAll('.btn');
-        
-        // 为每个按钮添加事件监听器
-        buttons.forEach(button => {
-            // 鼠标悬停事件
-            button.addEventListener('mouseenter', () => {
-                hoverSound.currentTime = 0; // 重置音频到开始
-                hoverSound.play().catch(e => console.log("音频播放失败:", e));
-            });
-            
-            // 点击事件
-            button.addEventListener('click', () => {
-                clickSound.currentTime = 0; // 重置音频到开始
-                clickSound.play().catch(e => console.log("音频播放失败:", e));
-                
-                // 添加视觉反馈
-                button.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    button.style.transform = '';
-                }, 150);
-            });
-        });
-        
-        /*// 处理音频自动播放策略
-        document.addEventListener('click', () => {
-            // 在用户与页面交互后预加载音频
-            hoverSound.load();
-            clickSound.load();
-        }, { once: true });*/
 
 
 
@@ -2164,7 +2095,7 @@ window.onload = function() {
           .addEventListener("click", function () {
             if (selectedCharacter) {
               console.log(`已选择角色: ${selectedCharacter}`);
-              window.location.replace("./outfile/index.html");
+              window.location.replace("outfile/index.html");
               // 在实际应用中，这里会开始游戏
             } else {
               alert("请先选择一个角色！");
@@ -2220,8 +2151,6 @@ window.onload = function() {
         setupSettings();
         setupExit();
         setupSpecialItems();
-        hoverSound.load();
-        clickSound.load();
 
         // 主菜单按钮事件
         document
