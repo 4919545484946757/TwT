@@ -16,7 +16,7 @@ class Player {
         // 玩家属性
         this.speed = 200;
         this.health = 500;
-        this.maxHealth = 100;
+        this.maxHealth = 900;
         this.isAlive = true;
         
         // 初始化武器

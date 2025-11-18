@@ -15,7 +15,7 @@ class Player {
         
         // 玩家属性
         this.speed = 200;
-        this.health = 500;
+        this.health = 900;
         this.maxHealth = 100;
         this.isAlive = true;
         

@@ -5,7 +5,7 @@ class Weapon {
         this.bullets = [];
         this.fireRate = 500;
         this.lastFired = 0;
-        this.damage = 10;
+        this.damage = 90;
         this.bulletSpeed = 300;
         this.maxBullets = 10;
         
@@ -22,7 +22,7 @@ class Weapon {
         switch (type) {
             case 'pistol':
                 this.fireRate = 500;
-                this.damage = 10;
+                this.damage = 90;
                 this.bulletSpeed = 300;
                 this.maxBullets = 10;
                 break;
