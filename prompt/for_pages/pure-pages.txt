@@ -1,0 +1,70 @@
+<!-- 视频背景 -->
+     <video autoplay muted loop id="bg-video">  
+      <source src="assets/videos/smoke.mp4" type="video/mp4">
+     </video>
+    <!-- 像素星星背景 -->
+    <div class="stars-cotnr" id="stars-cotnr">
+      <div class="stars" id="stars">
+        <div class="geograph"></div>
+        <div class="plus"></div>
+
+        <!-- div class="scp-docontainer">
+          <div class="sd-dot">
+            
+          </div>
+          <div class="sd-lt"></div>
+          <div class="sd-rt"></div>
+          <div class="sd-lb"></div>
+          <div class="sd-rb"></div>
+          
+          
+          <div class="scp-document">
+            <div class="sd-title">
+              <span class="scp-id">SCP-???</span>
+              <div class="scp-description">We know nothing about it</div>
+              <div class="scp-img"></div>
+            </div>
+            <div class="hr-line"></div>
+            <div class="sd-content">
+              
+            </div>
+          </div>
+        </div -->
+      </div>
+    </div>
+
+    </div>
+  </div>
+    <div id="crosshair2">
+      <div class="horizontal2"></div>
+      <div class="vertical2"></div>
+      <div id="coordinates2">(0, 0)</div>
+    </div>
+    <!--div id="crosshair3">
+      <div class="horizontal2"></div>
+      <div class="vertical2"></div>
+      <div id="coordinates3">(0, 0)</div>
+    </div-->
+
+    <!-- 像素装饰元素 -->
+    <div class="pixel-art pixel-1"></div>
+    <div class="pixel-art pixel-2"></div>
+
+    <div class="container">
+      <!-- 边框装饰 -->
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+      <!-- 主菜单页面 -->
+      <div class="page active" id="main-menu">
+      </div>
+
+
+
+	loaddocuments();
+        load_background_height();
+        createStars();
+        load_talent_page();
+        updatePointsDisplay();

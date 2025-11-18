@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>战术加载界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'FusionPixel', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        @font-face {
+            font-family: 'FusionPixel';
+            src: url('assets/fonts/fusion-pixel-12px-monospaced-zh_hans.ttf') format('truetype');
+            
+        }
+        
+        body {
+            background: #000000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #a0a0a0;
+        }
+        
+        .tactical-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(15, 14, 10, 0.9), rgba(15, 13, 10, 0.9)),
+                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(80, 63, 40, 0.1) 19px, rgba(40, 80, 60, 0.1) 20px),
+                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(80, 66, 40, 0.1) 19px, rgba(40, 80, 60, 0.1) 20px);
+            z-index: -1;
+        }
+        
+        .loading-container {
+            text-align: center;
+            width: 85%;
+            max-width: 700px;
+            background: rgba(25, 24, 20, 0.8);
+            border: 1px solid #4a3f2a;
+            border-radius: 2px;
+            padding: 2.5rem;
+            box-shadow: 0 0 20px rgba(30, 21, 0, 0.5);
+            position: relative;
+        }
+        
+        .loading-container::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid #5a543a;
+            pointer-events: none;
+        }
+        
+        .game-title {
+            font-size: 2.8rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+            color: #d8d2c8;
+            text-transform: uppercase;
+            font-weight: 300;
+            text-shadow: 0 0 5px rgba(180, 164, 100, 0.3);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .game-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #7a683a, transparent);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 16px;
+            background: rgba(25, 23, 15, 0.8);
+            border: 1px solid #4a3a2a;
+            border-radius: 1px;
+            margin: 2.5rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #6a602a, #8a893a);
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            background-size: 20px 100%;
+            animation: scan 1s linear infinite;
+        }
+        
+        .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #c0b5a0;
+            letter-spacing: 1px;
+        }
+        
+        .loading-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -1.8rem;
+            font-size: 0.75rem;
+            color: #7a6d5a;
+        }
+        
+        .continue-text {
+            margin-top: 2.5rem;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            color: #c0b6a0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background: #7a5d3a;
+        }
+        
+        .crosshair::before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            transform: translateY(-50%);
+        }
+        
+        .crosshair::after {
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            transform: translateX(-50%);
+        }
+        
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #7a673a;
+        }
+        
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        .status-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #5a7a6a;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #2a6a4a;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        @keyframes scan {
+            0% {
+                background-position: -20px 0;
+            }
+            100% {
+                background-position: 20px 0;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+        
+        .flashing {
+            animation: flash 1.5s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tactical-bg"></div>
+    
+    <div class="loading-container">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        
+        <div class="crosshair"></div>
+        
+        <h1 class="game-title">[TWT-ALPHA-49]</h1>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="percentage" id="percentage">0%</div>
+            </div>
+        </div>
+        
+        <div class="loading-info">
+            <span>系统初始化</span>
+            <span>加载资源</span>
+        </div>
+        
+        <div class="status-display">
+            <div class="status-item">
+                <div class="status-indicator pulse"></div>
+                <span>系统状态: 在线</span>
+            </div>
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <span>连接: 稳定</span>
+            </div>
+        </div>
+        
+        <p class="continue-text flashing" id="continueText">按任意键继续</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = document.getElementById('percentage');
+            const continueText = document.getElementById('continueText');
+            
+            // 初始进度为0
+            let progress = 0;
+            
+            // 0.5秒后开始预加载index.html
+            setTimeout(() => {
+                // 模拟预加载过程
+                const interval = setInterval(() => {
+                    progress += 1;
+                    progressBar.style.width = `${progress}%`;
+                    percentage.textContent = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        // 进度达到100%后显示"按任意键继续"
+                        setTimeout(() => {
+                            continueText.style.opacity = '1';
+                            
+                            // 监听键盘事件
+                            document.addEventListener('keydown', function() {
+                                // 跳转到index.html
+                                window.location.href = 'index.html';
+                            });
+                            
+                            // 可选：也支持鼠标点击
+                            document.addEventListener('click', function() {
+                                window.location.href = 'index.html';
+                            });
+                        }, 300);
+                    }
+                }, 10); // 每10毫秒增加1%，总共1秒完成
+            }, 500);
+        });
+    </script>
+</body>
+</html>

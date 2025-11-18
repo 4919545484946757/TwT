@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标事件监听器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .event-area {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .event-display {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        
+        .event-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .left-button {
+            background: rgba(0, 100, 255, 0.3);
+            border-left: 4px solid #0066ff;
+        }
+        
+        .right-button {
+            background: rgba(255, 100, 0, 0.3);
+            border-left: 4px solid #ff6400;
+        }
+        
+        .middle-button {
+            background: rgba(0, 200, 100, 0.3);
+            border-left: 4px solid #00c864;
+        }
+        
+        .wheel-event {
+            background: rgba(150, 100, 255, 0.3);
+            border-left: 4px solid #9664ff;
+        }
+        
+        .other-event {
+            background: rgba(150, 150, 150, 0.3);
+            border-left: 4px solid #969696;
+        }
+        
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+            background: rgba(40, 40, 60, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .mouse-area {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-area {
+            width: 100%;
+            height: 300px;
+            background: rgba(20, 20, 40, 0.9);
+            border: 2px dashed #555;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: crosshair;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-area:hover {
+            border-color: #777;
+        }
+        
+        .test-area:active {
+            background: rgba(30, 30, 60, 0.9);
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+        
+        .coordinates {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .long-press-indicator {
+            position: absolute;
+            width: 0;
+            height: 8px;
+            background: #ff6400;
+            bottom: 0;
+            left: 0;
+            transition: width 0.1s linear;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .clear-btn {
+            background: #ff6400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .clear-btn:hover {
+            background: #ff8533;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .event-area, .mouse-area {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>鼠标事件监听器</h1>
+        <p class="subtitle">完整的鼠标事件监听，包括左键、右键、滚轮的单点、长按等事件</p>
+    </header>
+    
+    <div class="container">
+        <div class="content">
+            <div class="event-area">
+                <h2>事件记录</h2>
+                <div class="event-display" id="eventDisplay">
+                    <!-- 事件记录将在这里显示 -->
+                    <div class="event-item other-event">
+                        <span>页面加载完成</span>
+                        <span>系统</span>
+                    </div>
+                </div>
+                
+                <button class="clear-btn" id="clearBtn">清空事件记录</button>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div>左键点击</div>
+                        <div class="stat-value" id="leftClickCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>右键点击</div>
+                        <div class="stat-value" id="rightClickCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>中键点击</div>
+                        <div class="stat-value" id="middleClickCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div>滚轮事件</div>
+                        <div class="stat-value" id="wheelEventCount">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mouse-area">
+                <h2>鼠标测试区域</h2>
+                <div class="test-area" id="testArea">
+                    <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+                    <div class="long-press-indicator" id="longPressIndicator"></div>
+                    <p>在此区域测试鼠标事件</p>
+                </div>
+                
+                <div class="instructions">
+                    <p>尝试：左键单击、右键单击、中键单击、长按、滚轮滚动、拖拽</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>鼠标事件监听器 &copy; 2023 | 演示完整的鼠标事件处理</p>
+    </footer>
+
+    <script>
+        // 获取DOM元素
+        const eventDisplay = document.getElementById('eventDisplay');
+        const testArea = document.getElementById('testArea');
+        const coordinates = document.getElementById('coordinates');
+        const longPressIndicator = document.getElementById('longPressIndicator');
+        const clearBtn = document.getElementById('clearBtn');
+        
+        // 统计计数器
+        const leftClickCount = document.getElementById('leftClickCount');
+        const rightClickCount = document.getElementById('rightClickCount');
+        const middleClickCount = document.getElementById('middleClickCount');
+        const wheelEventCount = document.getElementById('wheelEventCount');
+        
+        // 初始化计数器
+        let counters = {
+            left: 0,
+            right: 0,
+            middle: 0,
+            wheel: 0
+        };
+        
+        // 长按相关变量
+        let longPressTimer = null;
+        let longPressDuration = 1000; // 长按判定时间（毫秒）
+        let isLongPress = false;
+        let currentButton = null;
+        
+        // 更新坐标显示
+        function updateCoordinates(e) {
+            const rect = testArea.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            coordinates.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)}`;
+        }
+        
+        // 添加事件到显示区域
+        function addEventToDisplay(eventName, buttonType, details = '') {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            
+            const eventItem = document.createElement('div');
+            eventItem.className = `event-item ${buttonType}`;
+            
+            eventItem.innerHTML = `
+                <span>${eventName} ${details}</span>
+                <span>${timeString}</span>
+            `;
+            
+            eventDisplay.prepend(eventItem);
+            
+            // 限制显示的事件数量
+            if (eventDisplay.children.length > 50) {
+                eventDisplay.removeChild(eventDisplay.lastChild);
+            }
+        }
+        
+        // 更新计数器显示
+        function updateCounterDisplay() {
+            leftClickCount.textContent = counters.left;
+            rightClickCount.textContent = counters.right;
+            middleClickCount.textContent = counters.middle;
+            wheelEventCount.textContent = counters.wheel;
+        }
+        
+        // 鼠标按下事件
+        testArea.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            updateCoordinates(e);
+            
+            // 确定按下的按钮
+            let buttonName = '';
+            switch(e.button) {
+                case 0:
+                    buttonName = 'left-button';
+                    currentButton = 'left';
+                    break;
+                case 1:
+                    buttonName = 'middle-button';
+                    currentButton = 'middle';
+                    break;
+                case 2:
+                    buttonName = 'right-button';
+                    currentButton = 'right';
+                    break;
+                default:
+                    buttonName = 'other-event';
+                    currentButton = 'other';
+            }
+            
+            // 添加按下事件记录
+            addEventToDisplay('鼠标按下', buttonName, `(按钮: ${currentButton})`);
+            
+            // 重置长按状态
+            isLongPress = false;
+            longPressIndicator.style.width = '0';
+            
+            // 启动长按计时器
+            longPressTimer = setTimeout(function() {
+                isLongPress = true;
+                addEventToDisplay('长按事件', buttonName, `(按钮: ${currentButton}, 持续时间: ${longPressDuration}ms)`);
+                
+                // 长按指示器动画
+                longPressIndicator.style.width = '100%';
+            }, longPressDuration);
+            
+            // 长按进度指示器动画
+            let startTime = Date.now();
+            let progressInterval = setInterval(function() {
+                if (isLongPress) {
+                    clearInterval(progressInterval);
+                    return;
+                }
+                
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min((elapsed / longPressDuration) * 100, 100);
+                longPressIndicator.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 50);
+        });
+        
+        // 鼠标释放事件
+        testArea.addEventListener('mouseup', function(e) {
+            e.preventDefault();
+            updateCoordinates(e);
+            
+            // 清除长按计时器
+            clearTimeout(longPressTimer);
+            
+            // 确定释放的按钮
+            let buttonName = '';
+            switch(e.button) {
+                case 0:
+                    buttonName = 'left-button';
+                    currentButton = 'left';
+                    break;
+                case 1:
+                    buttonName = 'middle-button';
+                    currentButton = 'middle';
+                    break;
+                case 2:
+                    buttonName = 'right-button';
+                    currentButton = 'right';
+                    break;
+                default:
+                    buttonName = 'other-event';
+                    currentButton = 'other';
+            }
+            
+            // 如果不是长按，则记录为点击事件
+            if (!isLongPress) {
+                addEventToDisplay('鼠标点击', buttonName, `(按钮: ${currentButton})`);
+                
+                // 更新计数器
+                if (e.button === 0) counters.left++;
+                else if (e.button === 1) counters.middle++;
+                else if (e.button === 2) counters.right++;
+                
+                updateCounterDisplay();
+            } else {
+                addEventToDisplay('长按释放', buttonName, `(按钮: ${currentButton})`);
+            }
+            
+            // 重置长按指示器
+            longPressIndicator.style.width = '0';
+            isLongPress = false;
+        });
+        
+        // 鼠标移动事件
+        testArea.addEventListener('mousemove', function(e) {
+            updateCoordinates(e);
+        });
+        
+        // 鼠标滚轮事件
+        testArea.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            updateCoordinates(e);
+            
+            const direction = e.deltaY > 0 ? '向下' : '向上';
+            addEventToDisplay('滚轮滚动', 'wheel-event', `(方向: ${direction}, 增量: ${Math.abs(e.deltaY)})`);
+            
+            // 更新计数器
+            counters.wheel++;
+            updateCounterDisplay();
+        });
+        
+        // 右键菜单事件（阻止默认右键菜单）
+        testArea.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            addEventToDisplay('右键菜单已阻止', 'right-button');
+        });
+        
+        // 鼠标进入区域事件
+        testArea.addEventListener('mouseenter', function() {
+            addEventToDisplay('鼠标进入区域', 'other-event');
+        });
+        
+        // 鼠标离开区域事件
+        testArea.addEventListener('mouseleave', function() {
+            addEventToDisplay('鼠标离开区域', 'other-event');
+            
+            // 离开区域时清除长按计时器
+            clearTimeout(longPressTimer);
+            longPressIndicator.style.width = '0';
+            isLongPress = false;
+        });
+        
+        // 鼠标拖拽开始
+        testArea.addEventListener('dragstart', function(e) {
+            addEventToDisplay('拖拽开始', 'other-event');
+        });
+        
+        // 清空事件记录
+        clearBtn.addEventListener('click', function() {
+            eventDisplay.innerHTML = '';
+            addEventToDisplay('事件记录已清空', 'other-event');
+            
+            // 重置计数器
+            counters = { left: 0, right: 0, middle: 0, wheel: 0 };
+            updateCounterDisplay();
+        });
+        
+        // 页面加载完成事件
+        window.addEventListener('load', function() {
+            addEventToDisplay('页面加载完成', 'other-event');
+        });
+    </script>
+</body>
+</html>
